@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: url(../img/select.jpg) no-repeat;
+  background: url(../img/bg.jpg) no-repeat;
   background-size: cover;
 
   display: flex;
@@ -17,19 +17,8 @@ h1, h2, h3 {
 
 input {
   padding: 10px;
-  border: 1px solid #06D85F;
+  border: 1px solid #06f85F;
   border-radius: 5px;
-}
-
-.wrapper {
-
-    margin: 20px;
-    padding: 5px;
-
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-content: center;
 }
 
 .wrap-row {
@@ -57,16 +46,16 @@ input {
 
   font-size: 1em;
   padding: 10px;
-  color: #06D85F;
+  color: #06f85F;
   text-shadow: 0 0 2px black;
-  border: 2px solid #06D85F;
+  border: 2px solid #06f85F;
   border-radius: 20px/50px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease-out;
 }
 .button:hover {
-  background: #06D85F;
+  background: #06f85F;
   color: #fff;
 }
 
@@ -185,7 +174,7 @@ ul button {
 .category-block {
   transition: 0.7s;
   position: absolute;
-  left: -365px;
+  left: 12px;
   top: 49px;
 
   height: 400px;
@@ -193,14 +182,14 @@ ul button {
 }
 
 .toggleleft {
-  left: 12px;
+  left: -365px;
 }
 
 .history-block {
   transition: 0.7s;
   position: absolute;
   right: 3px;
-  top: -434px;
+  top: 49px;
   min-width: 300px;
 
   height: 400px;
@@ -208,7 +197,7 @@ ul button {
 }
 
 .toggleright {
-  top: 49px;
+  top: -434px;
 }
 
 #existing-histories li b {
@@ -219,7 +208,7 @@ ul button {
 
 
 ::-webkit-scrollbar-button {
-  background-image:url(../img/select.jpg);
+  /* background-image:url(../img/select.jpg); */
   background-repeat:no-repeat;
   width:3px;
   height:0px

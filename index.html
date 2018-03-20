@@ -8,8 +8,6 @@
 </head>
 <body>
 	<nav>
-		<!-- <button data-popup="edit-history">edit-history</button> -->
-
 		<button class="button" data-popup="add-category">Добавить категорию</button>
 		<button id="hidden" class="button">Категории</button>
 		<button id="historyBtn" class="button">История</button>
@@ -20,10 +18,9 @@
 	</nav>
 	<h1>Учет финансов</h1>
 
-	<div class="wrapper">
 
 		<div class="box">
-			<h2>Добавить доход/расход</h2>
+			<h2>Добавить финансовую операцию</h2>
 			<div class="wrap-row">
 				<div class="wrap-column">
 					<h3><label for="money">Сумма</label></h3>
@@ -37,16 +34,17 @@
 					</select>
 				</div>
 
-
 			</div>
-			<button class="button" id="incoming-balance" data-save="save">Сохранить</button>
+			<div class="wrap-column">
+				<div class="wrap-row">
+					<button class="button" id="incoming-balance" data-save="save">Сохранить</button>
+				</div>
+			</div>
 		</div>
-	</div>
 
 	<div class="bgpopup">
 		<div class="hidden popupWindow" data-popup="add-category">
 			<h2>Добавить категорию</h2>
-			<!-- <a class="close">&times;</a> -->
 			<button class="close">&times;</button>
 			<div class="wrap-column">
 
