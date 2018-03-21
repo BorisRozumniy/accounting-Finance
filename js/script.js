@@ -55,11 +55,11 @@ let
 		},
 	};
 
-let {categories, histories} = mainObject;
+// let {categories, histories} = mainObject; // no working
 let key = () => new Date().toLocaleString();
 
 
-// добавляем категоию в select
+// добавляем категорию в select
 // используется в функции addCategoriHandler
 addCategoryInSelect = (option, parent, attId) => {
 	let newOption = document.createElement('option');
@@ -76,7 +76,7 @@ insertCategory = (obj) => {
 		btnRemove = document.createElement('button');
 	category.classList.add(obj.status);
 	category.textContent = obj.name;
-	category.setAttribute('data-indexCategory', categories.length - 1);
+	category.setAttribute('data-categoryid', categoryTempLink.id);
 
 		btnEdit.classList.add('btn-edit');
 		btnEdit.setAttribute('data-popup', 'edit-category');
@@ -131,7 +131,7 @@ addCategoriHandler = () => {
 insertHistoryItem = obj => {
 	let parent = existingHistories;
 	console.log(obj, "вставляемый обьект в историю" )
-	let {categories: categories} = obj;
+	// let {categories: categories} = obj;
 	let item = document.createElement('li'),
 		category = document.createElement('span'),
 		money = document.createElement('b'),
@@ -160,9 +160,9 @@ changeBalance = () => {
 	let selected = selectedCategory.options[selectedCategory.selectedIndex].value;
 	console.log('selected '+selected);
 	let category;
-	for (item in categories) {
-		if (categories[item].name == selected)
-		category = categories[item];
+	for (item in mainObject.categories) {
+		if (mainObject.categories[item].name == selected)
+		category = mainObject.categories[item];
 	}
 
 	let obj = {
@@ -234,20 +234,25 @@ clearField = fieldValue => {
 };
 
 // для передачи атрибута из li>.btn-edit в popup
-let indexEditing;
+let curentCategory;
 
 // настройки для окна редактирования
 editCategoryBtnHandler = e => {
 	if (e.target.className != 'btn-edit' ) return;
-	indexEditing = e.target.parentElement.getAttribute('data-indexcategory');
-	let category = categories[indexEditing];
-	inputEditCategoryName.value = category.name;
-	category.status === "income" ? radioStatus[0].checked = true : radioStatus[1].checked = true;
+
+	let id = e.target.parentElement.getAttribute('data-categoryid');
+	for (let i = 0; mainObject.categories.length > i; i++) {
+		if (mainObject.categories[i].id == id)
+		curentCategory = mainObject.categories[i];
+	}
+
+	inputEditCategoryName.value = curentCategory.name;
+	curentCategory.status === "income" ? radioStatus[0].checked = true : radioStatus[1].checked = true;
 };
 
 // окно редактирования
 obtainedDataFromEditPopup = () => {
-	let obj = categories[indexEditing];
+	let obj = curentCategory;
 	let option;
 	for (let i = 0; selectedCategory.length > i; i++) {
 		if (selectedCategory[i].value == obj.name)
@@ -264,8 +269,9 @@ obtainedDataFromEditPopup = () => {
 	let childrens = existingCategories.children;
 	let elem;
 	for (let i = 0; childrens.length > i; i++) {
-		let index = childrens[i].getAttribute('data-indexCategory');
-		if (index == indexEditing) elem = childrens[i];
+		let idAtt = childrens[i].getAttribute('data-categoryid');
+		if (idAtt == curentCategory.id)
+		elem = childrens[i];
 	};
 
 	elem.classList.remove(elem.classList[0]);
@@ -337,7 +343,7 @@ removeCategoryBtnHandler = e => {
   let target = e.target;
   if (target.className != 'btn-remove') return;
   let elemLi = target.parentElement;
-  let indexRemoving = elemLi.getAttribute('data-indexcategory');
+  let indexRemoving = elemLi.getAttribute('data-categoryid');
   mainObject.categories.splice(indexRemoving, 1);
   console.log(mainObject.categories);
 
