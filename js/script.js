@@ -307,7 +307,7 @@ let obtainedDataFromEditPopupHistory = () => {
 	let histories = mainObject.history;
 	// найти обьект с таким же keyEditingHistory
 
-	let obj ; /*findIndex(mainObject.history, key, keyEditingHistory);*/
+	let obj ;
 	for (let i = 0; histories.length > i; i++) {
 		if (histories[i].key == keyEditingHistory)
 		obj = histories[i];
@@ -343,16 +343,28 @@ removeCategoryBtnHandler = e => {
   let target = e.target;
   if (target.className != 'btn-remove') return;
   let elemLi = target.parentElement;
-  let indexRemoving = elemLi.getAttribute('data-categoryid');
-  mainObject.categories.splice(indexRemoving, 1);
-  console.log(mainObject.categories);
+  let idRemoving = elemLi.getAttribute('data-categoryid');
 
   elemLi.remove();
 
   let options = selectedCategory.children;
 	for ( let i = 0; options.length > i; i++ ) {
-		options[i].value == elemLi.textContent ? options[i].remove() : false;
+		// options[i].value == elemLi.textContent ? options[i].remove() : false;
+		if (options[i].value == elemLi.textContent)
+		options[i].remove();
 	};
+
+	let optionPopup = selectEditHistoryName.children;
+	for (let i = 0; optionPopup.length > i; i++) {
+		if (optionPopup[i].value == elemLi.textContent)
+		optionPopup[i].remove();
+	};
+
+	for (let i = 0; mainObject.categories.length > i; i++) {
+		if (mainObject.categories[i].id == idRemoving)
+		mainObject.categories.splice(i, 1);
+	}
+	console.log(mainObject.categories);
 };
 
 let removeHistoryBtnHandler = e => {
