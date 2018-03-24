@@ -39,14 +39,14 @@ let
 		history: [],
 		balance: function() {
 			let sum = 0;
-			mainObject.history.forEach ((item, i) => {
-				let money = mainObject.history[i].money;
+			hs.forEach ((item, i) => {
+				let money = hs[i].money;
 
-				if (mainObject.history[i].category.status == 'consumption' ) {
-					mainObject.history[i].money = '-' + money;
+				if (hs[i].category.status == 'consumption' ) {
+					hs[i].money = '-' + money;
 				}
-				sum += mainObject.history[i].money * 1;
-				mainObject.history[i].money = money;
+				sum += hs[i].money * 1;
+				hs[i].money = money;
 
 			});
 
@@ -55,7 +55,7 @@ let
 		},
 	};
 
-// let {categories, histories} = mainObject; // no working
+let {categories : ct, history : hs} = mainObject; // no working
 let key = () => new Date().toLocaleString();
 
 
@@ -97,8 +97,8 @@ createCategoryObj = (name, status) => {
 		id: key()
 	};
 
-	mainObject.categories.push(object);
-	categoryTempLink = (mainObject.categories[mainObject.categories.length-1]);
+	ct.push(object);
+	categoryTempLink = (ct[ct.length-1]);
 
 	//пригодится для связки HTML элемента с categories[index]
 	// console.log(`index category '${categories.length-1}'// from createCategoryObj`);
@@ -130,7 +130,7 @@ addCategoriHandler = () => {
 // используется в changeBalance
 insertHistoryItem = obj => {
 	let parent = existingHistories;
-	console.log(obj, "вставляемый обьект в историю" )
+	// console.log(obj, "вставляемый обьект в историю" )
 	// let {categories: categories} = obj;
 	let item = document.createElement('li'),
 		category = document.createElement('span'),
@@ -158,11 +158,11 @@ insertHistoryItem = obj => {
 // добавляем доходы и расходы в mainObject
 changeBalance = () => {
 	let selected = selectedCategory.options[selectedCategory.selectedIndex].value;
-	console.log('selected '+selected);
+	// console.log('selected '+selected);
 	let category;
-	for (item in mainObject.categories) {
-		if (mainObject.categories[item].name == selected)
-		category = mainObject.categories[item];
+	for (item in ct) {
+		if (ct[item].name == selected)
+		category = ct[item];
 	}
 
 	let obj = {
@@ -171,11 +171,11 @@ changeBalance = () => {
 		key: key()
 	}
 
-	mainObject.history.push(obj);
-	// mainObject.history.push(new Item(money.value, selected));
-	// console.log(mainObject.history.length, 'length')
+	hs.push(obj);
+	// hs.push(new Item(money.value, selected));
+	// console.log(hs.length, 'length')
 
-	insertHistoryItem( mainObject.history[mainObject.history.length-1]);
+	insertHistoryItem( hs[hs.length-1]);
 
 	money.value = '';
 };
@@ -190,11 +190,8 @@ openPopup = e => {
 	bgPopup.classList.toggle('visible');
 
 	for (let i = 0; popups.length > i; i++) {
-		// console.log(i, popups[i])
-		if ( link == popups[i].getAttribute('data-popup') ) {
-			// console.log(popups[i] , i)
-			coincidence = popups[i];
-		}
+		if ( link == popups[i].getAttribute('data-popup') )
+		coincidence = popups[i];
 	};
 	// console.log(coincidence)//undefined
 
@@ -241,9 +238,9 @@ editCategoryBtnHandler = e => {
 	if (e.target.className != 'btn-edit' ) return;
 
 	let id = e.target.parentElement.getAttribute('data-categoryid');
-	for (let i = 0; mainObject.categories.length > i; i++) {
-		if (mainObject.categories[i].id == id)
-		curentCategory = mainObject.categories[i];
+	for (let i = 0; ct.length > i; i++) {
+		if (ct[i].id == id)
+		curentCategory = ct[i];
 	}
 
 	inputEditCategoryName.value = curentCategory.name;
@@ -288,15 +285,15 @@ let keyEditingHistory;
 // передаем данные в окно редактирования
 editHistoryBtnHandler = e => {
 	if (e.target.className != 'btn-edit' ) return;
-	let history = mainObject.history;
 
 	keyEditingHistory = e.target.parentElement.getAttribute('data-key');
 
   let itemHistObj;
-  for (let i = 0; history.length > i; i++) {
-    if (history[i].key == keyEditingHistory)
-    itemHistObj = history[i];
-  }
+	hs.map( (elem, i) => elem.key == keyEditingHistory ? itemHistObj = elem : false );
+  // for (let i = 0; hs.length > i; i++) {
+  //   if (hs[i].key == keyEditingHistory)
+  //   itemHistObj = hs[i];
+  // }
 
 	selectEditHistoryName.value = itemHistObj.category.name;
 	inputEditHistoryMoney.value = itemHistObj.money;
@@ -304,21 +301,23 @@ editHistoryBtnHandler = e => {
 
 // сохраняем данные из popup для истории
 let obtainedDataFromEditPopupHistory = () => {
-	let histories = mainObject.history;
 	// найти обьект с таким же keyEditingHistory
 
 	let obj ;
-	for (let i = 0; histories.length > i; i++) {
-		if (histories[i].key == keyEditingHistory)
-		obj = histories[i];
-	};
+	hs.map( elem => elem.key == keyEditingHistory ? obj = elem : false );
+	// for (let i = 0; hs.length > i; i++) {
+	// 	if (hs[i].key == keyEditingHistory)
+	// 	obj = hs[i];
+	// };
 
 
-	let categoryId = selectEditHistoryName[selectEditHistoryName.selectedIndex].getAttribute('data-categoryid');
-	for (let i = 0; mainObject.categories.length > i; i++) {
-		if (mainObject.categories[i].id == categoryId)
-		obj.category = mainObject.categories[i];
-	}
+	let sel = selectEditHistoryName;
+	let categoryId = sel[sel.selectedIndex].getAttribute('data-categoryid');
+	ct.map( elem => elem.id == categoryId ? obj.category = elem : false );
+	// for (let i = 0; ct.length > i; i++) {
+	// 	if (ct[i].id == categoryId)
+	// 	obj.category = ct[i];
+	// }
 	obj.money = inputEditHistoryMoney.value;
 
 	let childrens = existingHistories.children;
@@ -332,7 +331,7 @@ let obtainedDataFromEditPopupHistory = () => {
 	elem.classList.add(obj.category.status);
 	// elem.childNodes[0].data = obj.category.name;
 	elem.childNodes[0].innerHTML = obj.category.name;
-	elem.childNodes[1].textContent = obj.money;
+	elem.childNodes[1].textContent = obj.money + 'грн';
 
 	mainObject.balance();
 };
@@ -349,7 +348,6 @@ removeCategoryBtnHandler = e => {
 
   let options = selectedCategory.children;
 	for ( let i = 0; options.length > i; i++ ) {
-		// options[i].value == elemLi.textContent ? options[i].remove() : false;
 		if (options[i].value == elemLi.textContent)
 		options[i].remove();
 	};
@@ -360,11 +358,12 @@ removeCategoryBtnHandler = e => {
 		optionPopup[i].remove();
 	};
 
-	for (let i = 0; mainObject.categories.length > i; i++) {
-		if (mainObject.categories[i].id == idRemoving)
-		mainObject.categories.splice(i, 1);
-	}
-	console.log(mainObject.categories);
+	ct.map( (elem, i) => elem.id == idRemoving ? ct.splice(i, 1) : false );
+	// for (let i = 0; ct.length > i; i++) {
+	// 	if (ct[i].id == idRemoving)
+	// 	ct.splice(i, 1);
+	// }
+	// console.log(ct);
 };
 
 let removeHistoryBtnHandler = e => {
@@ -372,13 +371,13 @@ let removeHistoryBtnHandler = e => {
 	if (target.className != 'btn-remove') return;
 	let elemLi = target.parentElement;
 	let att = elemLi.getAttribute('data-key');
-	let hist = mainObject.history;
-	// удаление из mainObject.history
-	for (let i = 0; hist.length > i; i++) {
-		if (hist[i].key == att) {
-			hist.splice(i, 1)
-		}
-	};
+	// удаление из hs
+	hs.map( (elem, i) => elem.key == att ? hs.splice(i, 1) : false );
+	// for (let i = 0; hs.length > i; i++) {
+	// 	if (hs[i].key == att) {
+	// 		hs.splice(i, 1)
+	// 	}
+	// };
 
 	// удаление из DOM
 	elemLi.remove();
