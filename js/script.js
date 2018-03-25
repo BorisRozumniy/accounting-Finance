@@ -60,7 +60,7 @@ let key = () => new Date().toLocaleString();
 
 
 // добавляем категорию в select
-// используется в функции addCategoriHandler
+// используется в функции addCategoryHandler
 addCategoryInSelect = (option, parent, attId) => {
 	let newOption = document.createElement('option');
 	newOption.text = option;
@@ -69,14 +69,14 @@ addCategoryInSelect = (option, parent, attId) => {
 };
 
 // добавить категорию в DOM как li
-// используется в функции addCategoriHandler
+// используется в функции addCategoryHandler
 insertCategory = (obj) => {
 	let category = document.createElement('li'),
 		btnEdit = document.createElement('button'),
 		btnRemove = document.createElement('button');
 	category.classList.add(obj.status);
 	category.textContent = obj.name;
-	category.setAttribute('data-categoryid', categoryTempLink.id);
+	category.setAttribute('data-categoryid', (categoryTempLink.id) || fromStore.categories.id);
 
 		btnEdit.classList.add('btn-edit');
 		btnEdit.setAttribute('data-popup', 'edit-category');
@@ -105,16 +105,11 @@ createCategoryObj = (name, status) => {
 	return object;
 };
 
-addCategoriHandler = () => {
+addCategoryHandler = () => {
 
 	let newCategory = newCategories.value;
 	let status = (document.querySelector('#income').checked) ;
 
-
-
-	// clearField(newCategories);
-
-	// console.log(`name category: "${newCategory}"`)
 	//очищаем input
 	newCategories.value = '';
 
@@ -223,7 +218,7 @@ clearInputs = e => {
 	}
 };
 // очищаем значение из переданного аргумента
-// применяется в addCategoriHandler
+// применяется в addCategoryHandler
 clearField = fieldValue => {
 	let removedValue = fieldValue.value;
 	fieldValue.value = '';
@@ -388,11 +383,11 @@ let removeHistoryBtnHandler = e => {
 
 
 // обработчики событий
-categoryBtn.addEventListener('click', addCategoriHandler);
+categoryBtn.addEventListener('click', addCategoryHandler);
 incomingBalance.addEventListener('click', changeBalance);
 incomingBalance.addEventListener('click', mainObject.balance);
-hidden.addEventListener('click', function(e) { wrapcategory.classList.toggle('toggleleft') });
-historyBtn.addEventListener('click', function(e) { wraphistory.classList.toggle('toggleright') });
+toggleCategories.addEventListener('click', function(e) { wrapcategory.classList.toggle('toggleleft') });
+toggleHistory.addEventListener('click', function(e) { wraphistory.classList.toggle('toggleright') });
 document.body.addEventListener('click', openPopup);
 // openPopup обрабатывает только Attribute('data-popup')
 // if (!e.target.getAttribute('data-popup')) return;
