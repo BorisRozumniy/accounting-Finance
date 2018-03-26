@@ -7,12 +7,11 @@
 	<link rel="stylesheet" href="style/test.css">
 </head>
 <body>
-	<button type="button" id="toLocalStorageBtn">Save in localStorage</button>
-	<button type="button" id="fromLocalStorageBtn">Update from localStorage</button>
 	<nav>
-		<button class="button" data-popup="add-category">Добавить категорию</button>
-		<button id="toggleCategories" class="button">Категории</button>
-		<button id="toggleHistory" class="button">История</button>
+		<button type="button" id="toLocalStorageBtn">Save in localStorage</button>
+		<button type="button" id="fromLocalStorageBtn">Update from localStorage</button>
+		<button class="button" data-popup="add-category" title="F2">Добавить категорию</button>
+
 		<div id="show-balance" class="box">
 			<span>Текущий баланс:</span>
 			<b>0</b>
@@ -128,11 +127,13 @@
 				<span>Без категории</span>
 			</li>
 		</ul>
+		<button id="toggleCategories" class="button forCategoriesShow" title="F4">Категории</button>
 	</div>
 
 	<div id="wraphistory" class="box history-block">
 		<h2>История</h2>
 		<ul id="existing-histories"></ul>
+		<button id="toggleHistory" class="button forHistoryShow" title="F7">История</button>
 	</div>
 
 

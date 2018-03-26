@@ -1,0 +1,25 @@
+.forCategoriesShow {
+  position: fixed;
+  top: 7px;
+  left: 10px;
+}
+
+.forCategoriesHid {
+  transform: rotate(90deg) ;
+  position: fixed;
+  top: 29px;
+  left: -28px;
+}
+
+.forHistoryShow {
+  position: fixed;
+  top: 7px;
+  right: 10px;
+}
+
+.forHistoryHid {
+  position: fixed;
+  top: 17px;
+  right: -28px;
+  transform: rotate(90deg) ;
+}

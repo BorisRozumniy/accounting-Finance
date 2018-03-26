@@ -26,8 +26,9 @@ findIndex = (arr, prop, value) => {
 let btnLocalStorage = document.querySelector('#toLocalStorageBtn');
 let btnUpdate = document.querySelector('#fromLocalStorageBtn');
 
+let l;
 saveStore = () => {
-  // если в пекрвый раз
+  // если в первый раз
   if (!localStorage.finance) {
     let str = JSON.stringify(mainObject);
     localStorage.setItem('finance', str);
@@ -37,21 +38,25 @@ saveStore = () => {
   if (localStorage.finance) {
     let obj = JSON.parse(localStorage.finance);
     let {history: hL, categories: cL} = obj;
-    //проверит каждый элемент масива,чтоб не сохранять существующие
-    cL.map(cat =>{
+    //проверяем каждый элемент масива,чтоб не сохранять существующие
+    cL.map(y =>{
 
-      ct.map(x => {
-        if (JSON.stringify(x) === JSON.stringify(cat)) {
-          console.log(x)
+      ct.map( (x, i, arr) => {
+        if (JSON.stringify(x) === JSON.stringify(y)) {
+          console.log('===' , x)
+          ct.splice(i, 1);
         }
-        if (JSON.stringify(x) !== JSON.stringify(cat)) {
+        if (JSON.stringify(x) !== JSON.stringify(y)) {
           console.log('!==', x)
-          cL.push(x);
+          cL.some(z => z.name !== x.name ? cL.push(x) : false);
+
         }
       })
 
     });
-    localStorage.setItem('finance', JSON.stringify(obj));
+    // localStorage.setItem('finance', JSON.stringify(obj));
+    console.log(cL);
+    l = cL;
   }
 };
 

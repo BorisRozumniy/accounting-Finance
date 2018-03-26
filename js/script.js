@@ -387,30 +387,44 @@ hotKey = e => {
   let event = new Event('click', {bubbles: true});
   switch (e.keyCode) {
     case 113:
-      console.log('popup add categories')
       addCategoryBtn.dispatchEvent(event);
       break;
     case 115:
-      console.log(toggleCategories)
       toggleCategories.dispatchEvent(event);
       break;
     case 118:
-      console.log(toggleHistory)
       toggleHistory.dispatchEvent(event);
       break;
     case 27:
-        console.log(close)
         close[0].dispatchEvent(event);
   }
 };
+transformButton = e => {
+	// console.log(e.target, 'working')
+	toggleCategories.classList.toggle('forCategoriesShow');
+	toggleCategories.classList.toggle('forCategoriesHid');
 
+};
+
+transormBtnHistory = e => {
+	toggleHistory.classList.toggle('forHistoryShow');
+	toggleHistory.classList.toggle('forHistoryHid');
+}
 
 // обработчики событий
 categoryBtn.addEventListener('click', addCategoryHandler);
 incomingBalance.addEventListener('click', changeBalance);
 incomingBalance.addEventListener('click', mainObject.balance);
-toggleCategories.addEventListener('click', function(e) { wrapcategory.classList.toggle('toggleleft') });
-toggleHistory.addEventListener('click', function(e) { wraphistory.classList.toggle('toggleright') });
+
+toggleCategories.addEventListener('click', function(e) {
+	wrapcategory.classList.toggle('toggleleft');
+	transformButton(e);
+});
+toggleHistory.addEventListener('click', function(e) {
+	wraphistory.classList.toggle('toggleright');
+	transormBtnHistory(e);
+});
+
 document.body.addEventListener('click', openPopup);
 // openPopup обрабатывает только Attribute('data-popup')
 // if (!e.target.getAttribute('data-popup')) return;
