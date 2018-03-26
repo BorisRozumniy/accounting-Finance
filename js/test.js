@@ -92,32 +92,3 @@ btnUpdate.addEventListener('click', updateMainObject);
 // в каждой категории отображать сумму именно этой категории
 // разбить историю по месяцам
 // стилизировать options
-
-// commit "implemented deletion category id"
-
-hotKey = e => {
-  // console.log(e.keyCode)
-  let addCategoryBtn = document.querySelectorAll('[data-popup]')[0];
-  // let categoriesBtn = document.querySelectorAll('[data-popup]')[1];
-  // let historyBtn = document.querySelectorAll('[data-popup]')[2];
-  if (e.keyCode === 65 && e.altKey) {
-    let event = new Event('click', {bubbles: true});
-    addCategoryBtn.dispatchEvent(event);
-  }
-  if (e.keyCode === 67 && e.altKey) {
-    console.log('categoryBtn')
-    let event = new Event('click', {bubbles: true});
-    toggleCategories.dispatchEvent(event);
-  }
-  if (e.keyCode === 72 && e.altKey) {
-    console.log('historyBtn')
-    let event = new Event('click', {bubbles: true});
-    toggleHistory.dispatchEvent(event);
-  }
-  // if (e.keyCode == 27) {
-  //   console.log('close')
-  //   let event = new Event('click', {bubbles: true});
-  //   close.dispatchEvent(event);
-  // }
-}
-document.addEventListener('keydown', hotKey)

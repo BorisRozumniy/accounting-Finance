@@ -380,6 +380,29 @@ let removeHistoryBtnHandler = e => {
 	mainObject.balance();
 };
 
+hotKey = e => {
+  // console.log(e.keyCode, e.altKey)
+  let addCategoryBtn = document.querySelectorAll('[data-popup]')[0];
+
+  let event = new Event('click', {bubbles: true});
+  switch (e.keyCode) {
+    case 113:
+      console.log('popup add categories')
+      addCategoryBtn.dispatchEvent(event);
+      break;
+    case 115:
+      console.log(toggleCategories)
+      toggleCategories.dispatchEvent(event);
+      break;
+    case 118:
+      console.log(toggleHistory)
+      toggleHistory.dispatchEvent(event);
+      break;
+    case 27:
+        console.log(close)
+        close[0].dispatchEvent(event);
+  }
+};
 
 
 // обработчики событий
@@ -402,3 +425,4 @@ btnEditCategorySave.addEventListener('click', obtainedDataFromEditPopup);
 btnEditHistorySave.addEventListener('click', obtainedDataFromEditPopupHistory);
 existingHistories.addEventListener('click', removeHistoryBtnHandler);
 existingHistories.addEventListener('click', editHistoryBtnHandler);
+document.addEventListener('keydown', hotKey);
